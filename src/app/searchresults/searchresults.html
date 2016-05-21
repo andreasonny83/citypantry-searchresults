@@ -1,0 +1,22 @@
+<div class="searchresults searchresults__container">
+
+  <form name="form" novalidate>
+    <div class="searchresults searchresults__form__row">
+      <label>Your budget
+        <input type="number" ng-model="budget" name="budget" ng-required="true" />
+      </label>
+      <span ng-show="form.size.$error.required">The value is required!</span>
+    </div>
+  </form>
+
+  <h2 class="searchresults searchresults__title">
+    Here your results:
+  </h2>
+
+  <div class="searchresults searchresults__list">
+    <citypantry-search
+        ng-repeat="result in $ctrl.results"
+        results="result">
+    </citypantry-search>
+  </div>
+</div>

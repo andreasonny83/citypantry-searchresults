@@ -1,0 +1,13 @@
+{
+  "extends": "xo-space/esnext",
+  "env": {
+    "mocha": true,
+    "browser": true
+  },
+  "globals": {
+    "expect": true,
+    "angular": true
+  },
+  "root": true,
+  "rules": {}
+}
