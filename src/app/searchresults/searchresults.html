@@ -1,22 +1,92 @@
 <div class="searchresults searchresults__container">
 
-  <form name="form" novalidate>
+  <form name="form"
+      ng-submit="$ctrl.submit(form.$valid)"
+      novalidate>
+
     <div class="searchresults searchresults__form__row">
-      <label>Your budget
-        <input type="number" ng-model="budget" name="budget" ng-required="true" />
+      <label>Package ID*
+        <select
+            ng-model="$ctrl.form.package"
+            ng-options="package.id for package in $ctrl.packages">
+          <option value="">-- choose a package --</option>
+        </select>
+
+        <input name="package"
+            type="number"
+            min="1"
+            placeholder="Required"
+            ng-model="$ctrl.form.package.id"
+            ng-required="true" />
       </label>
-      <span ng-show="form.size.$error.required">The value is required!</span>
+      <span ng-show="
+          form.package.$error.required &&
+          !form.package.$pristine">
+        This value is required!
+      </span>
+    </div>
+
+    <div class="searchresults searchresults__form__row">
+      <label>Headcount*
+        <input name="headcount"
+            type="number"
+            min="1"
+            placeholder="Required"
+            ng-model="$ctrl.form.headcount"
+            ng-required="true" />
+      </label>
+      <span ng-show="
+          form.headcount.$error.required &&
+          !form.headcount.$pristine">
+        This value is required!
+      </span>
+    </div>
+
+    <div class="searchresults searchresults__form__row">
+      <label>Budget (per person)
+        <input name="budget"
+            type="number"
+            min="0"
+            ng-model="$ctrl.form.budget"
+            />
+      </label>
+    </div>
+
+    <div class="searchresults searchresults__form__row">
+      Dietaries preferences*
+      <ul ng-repeat="dietary in $ctrl.dietary">
+        <li>
+          <label>{{dietary.name}}
+            <input name="dietary[dietary.name]"
+            ng-model="$ctrl.form.selectedDietary[dietary.name]"
+            type="number"
+            min="0" />
+          </label>
+        </li>
+      </ul>
+    </div>
+
+    <div class="searchresults searchresults__form__row">
+      <input name="submit"
+          type="submit"
+          value="search"
+          ng-disabled="!form.$valid">
     </div>
   </form>
 
-  <h2 class="searchresults searchresults__title">
-    Here your results:
-  </h2>
+  <div class="searchresults searchresults__list"
+    ng-show="form.$submitted">
+    <h2 class="searchresults searchresults__title">
+      Here your result:
+    </h2>
 
-  <div class="searchresults searchresults__list">
-    <citypantry-search
-        ng-repeat="result in $ctrl.results"
-        results="result">
-    </citypantry-search>
+    <citypantry-package
+        package="$ctrl.result"
+        pic="$ctrl.packagePic"
+        headcount="$ctrl.form.headcount"
+        budget="$ctrl.form.budget"
+        dietary="$ctrl.form.selectedDietary">
+    </citypantry-package>
   </div>
+
 </div>

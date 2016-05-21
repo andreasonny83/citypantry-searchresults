@@ -1,5 +1,5 @@
 angular
   .module('app')
   .component('citypantryTitle', {
-    templateUrl: 'app/title.html'
+    templateUrl: 'app/header/title.html'
   });

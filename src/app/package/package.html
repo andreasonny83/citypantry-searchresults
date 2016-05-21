@@ -1,0 +1,48 @@
+<div class="package">
+    <div class="package package__container"
+        ng-show="$ctrl.isAvailable">
+
+    <span>{{ $ctrl.dietary }}</span>
+    <img class="package package__image"
+        ng-src="{{ $ctrl.pic }}"
+        alt="package picture" />
+
+
+    <div class="package package__main">
+      <h3 class="package package__title">
+        {{ $ctrl.package.name }}
+        <p class="package package__title--price">
+          {{ $ctrl.package.pricePerPerson }}
+          <span>per person</span>
+        </p>
+      </h3>
+
+      <div class="package package__description">
+        {{ $ctrl.package.description }}
+      </div>
+    </div>
+
+    <div class="package package__packages">
+      <div ng-repeat="package in $ctrl.products">
+        <h4>{{ package.item.name }}</h4>
+        <h5>{{ package.item.description }}</h5>
+        <span>{{ package.count }}</span>
+
+        <div ng-repeat="option in package.item.options">
+          <label>{{ option.name }}
+            <input type="number"
+              min="0"
+              value="0" />
+          </label>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="package package__errors"
+    ng-hide="$ctrl.isAvailable">
+    Error:<br/>
+    <span ng-show="$ctrl.error.headcount">The minimum people for this package is: {{ $ctrl.error.minPeople }}</span>
+  </div>
+</div>
