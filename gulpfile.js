@@ -11,6 +11,7 @@ const hub = new HubRegistry([
   'gulp_tasks/misc.js',
   'gulp_tasks/browsersync.js',
   'gulp_tasks/karma.js',
+  'gulp_tasks/protractor.js',
   'gulp_tasks/inject.js',
   'gulp_tasks/build.js',
   'gulp_tasks/scripts.js',
