@@ -1,30 +1,48 @@
-// const techsJson = [
-//   {
-//     key: 'gulp',
-//     title: 'Gulp',
-//     logo: 'https://gfulton-images.s3.amazonaws.com/2015/Dec/gulp_logo-1450648879924.jpg',
-//     text1: 'The streaming build system',
-//     text2: 'Automate and enhance your workflow'
-//   },
-//   {
-//     key: 'angular1',
-//     title: 'Angular 1',
-//     logo: 'http://www.w3schools.com/angular/pic_angular.jpg',
-//     text1: 'HTML enhanced for web apps!',
-//     text2: 'AngularJS lets you extend HTML vocabulary for your application. The resulting environment is extraordinarily expressive, readable, and quick to develop.'
-//   }
-// ];
+let component;
 
-describe('techs component', () => {
+describe('package component', () => {
   beforeEach(angular.mock.module('app'));
 
-  it('should render the results', angular.mock.inject(() => {
-    // $httpBackend.when('GET', 'app/techs/techs.json').respond(techsJson);
-    // const element = $compile('<citypantry-searchresults></citypantry-searchresults>')($rootScope);
-    // $httpBackend.flush();
-    // $rootScope.$digest();
-    // const techs = element.find('citypantry-result');
-    // expect(techs.length).to.equal(3);
-    expect(3).to.equal(3);
+  beforeEach(inject(_$componentController_ => {
+    component = _$componentController_('citypantryPackage');
   }));
+
+  it('should initialize the component', angular.mock.inject(() => {
+    expect(component.isAvailable).to.equal(true);
+    expect(component.isThinking).to.equal(true);
+  }));
+
+  describe('function: checkErrors', () => {
+    it('should return an error if the user has not compile the required information', () => {
+      component.package = {};
+      expect(component.checkErrors()).to.equal(true);
+    });
+
+    it('should return false if all the minimum information are present', () => {
+      component.headcount = 1;
+      component.package = {
+        minPeople: 1
+      };
+
+      expect(component.checkErrors()).to.equal(false);
+    });
+  });
+
+  describe('function: refreshBudget - when the user provides a budget', () => {
+    it('it should return the formatted budget from the client', () => {
+      component.headcount = 3;
+      component.budget = 21;
+
+      expect(component.refreshBudget()).to.equal(6300);
+    });
+  });
+
+  describe('function: refreshBudget - when the user does not provide any budget', () => {
+    it('it should return the default package price', () => {
+      component.headcount = 3;
+      component.package = {pricePerPerson: 7.5};
+
+      expect(component.refreshBudget()).to.equal(2250);
+    });
+  });
 });

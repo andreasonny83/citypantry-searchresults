@@ -183,7 +183,6 @@ function PackageController() {
     vm.error = {};
 
     console.log('thinking...');
-    console.log(vm.dietary);
 
     if (!vm.package ||
         !vm.package.packageItems ||
@@ -217,10 +216,12 @@ function PackageController() {
     vm.upgrades = [];
     vm.error = {};
     vm.isAvailable = true;
+    vm.isThinking = true;
     vm.availableBudget = 0;
   }
 
   vm.refreshBudget = refreshBudget;
+  vm.checkErrors = checkErrors;
 
   _init();
 }
