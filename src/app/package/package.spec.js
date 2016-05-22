@@ -19,7 +19,6 @@ describe('techs component', () => {
   beforeEach(angular.mock.module('app'));
 
   it('should render the results', angular.mock.inject(() => {
-  // it('should render 3 elements <citypantry-tech>', angular.mock.inject(($rootScope, $compile, $httpBackend) => {
     // $httpBackend.when('GET', 'app/techs/techs.json').respond(techsJson);
     // const element = $compile('<citypantry-searchresults></citypantry-searchresults>')($rootScope);
     // $httpBackend.flush();

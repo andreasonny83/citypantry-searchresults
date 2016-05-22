@@ -1,29 +1,60 @@
-describe('tech component', () => {
-  beforeEach(module('app', $provide => {
-    $provide.factory('citypantrySearchresults', () => {
-      return {
-        templateUrl: 'app/searchresults/searchresults.html'
-      };
-    });
+const dietaryRequirements = {
+  count: 6,
+  dietaryRequirements: [
+    {
+      name: "Vegan",
+      sortOrder: 0
+    },
+    {
+      name: "Vegetarian",
+      sortOrder: 1
+    }
+  ]
+};
+
+const packages = {
+  data: {}
+};
+
+let component;
+
+describe('searchresults component', () => {
+  beforeEach(module('app'));
+
+  beforeEach(inject(_$componentController_ => {
+    component = _$componentController_('citypantrySearchresults');
   }));
 
-  it('should render the searchresults component',
-  // angular.mock.inject(($rootScope, $compile) => {
-  angular.mock.inject(() => {
-    expect(3).to.equal(3);
-    // const $scope = $rootScope.$new();
-    //
-    // $scope.fixture = {
-    //   key: 'gulp',
-    //   title: 'Gulp',
-    //   logo: 'https://gfulton-images.s3.amazonaws.com/2015/Dec/gulp_logo-1450648879924.jpg',
-    //   text1: 'The streaming build system',
-    //   text2: 'Automate and enhance your workflow'
-    // };
-    //
-    // const element = $compile('<citypantry-searchresults tech="fixture"></citypantry-searchresults>')($scope);
-    // $scope.$digest();
-    // const tech = element.find('h3');
-    // expect(tech.html().trim()).to.equal('Gulp');
+  it('should retrieve the dietary information',
+  angular.mock.inject($httpBackend => {
+    $httpBackend.when('GET', 'https://api.citypantry.com/dietary-requirements')
+        .respond(dietaryRequirements);
+
+    $httpBackend.flush();
+
+    expect(component.dietary[0].name)
+      .to.equal(dietaryRequirements.dietaryRequirements[0].name);
+    expect(component.dietary[0].sortOrder)
+      .to.equal(dietaryRequirements.dietaryRequirements[0].sortOrder);
+    expect(component.dietary[1].name)
+      .to.equal(dietaryRequirements.dietaryRequirements[1].name);
+    expect(component.dietary[1].sortOrder)
+      .to.equal(dietaryRequirements.dietaryRequirements[1].sortOrder);
   }));
+
+  describe('hould validate the form', () => {
+    it('It shoud return false if the form is not valid', () => {
+      expect(component.submit(false)).to.equal(false);
+    });
+
+    it('It shoud render a package image',
+    angular.mock.inject($httpBackend => {
+      $httpBackend.when('GET', 'https://api.citypantry.com/packages/100')
+          .respond(packages);
+
+      console.log(component);
+      component.form.package.id = 100;
+      $httpBackend.flush();
+    }));
+  });
 });

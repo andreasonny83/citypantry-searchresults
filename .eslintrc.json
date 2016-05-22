@@ -6,6 +6,7 @@
   },
   "globals": {
     "expect": true,
+    "inject": true,
     "angular": true
   },
   "root": true,
