@@ -1,6 +1,7 @@
 <div class="searchresults searchresults__container">
 
   <form name="form"
+      class="searchresults searchresults__form"
       ng-submit="$ctrl.submit(form.$valid)"
       novalidate>
 
@@ -11,7 +12,9 @@
             ng-options="package.id for package in $ctrl.packages">
           <option value="">-- choose a package --</option>
         </select>
+      </label>
 
+      <label>Or type in your custom packageID here:
         <input name="package"
             type="number"
             min="1"
@@ -54,11 +57,11 @@
 
     <div class="searchresults searchresults__form__row">
       Dietaries preferences*
-      <ul ng-repeat="dietary in $ctrl.dietary">
-        <li>
+      <ul>
+        <li ng-repeat="dietary in $ctrl.dietary">
           <label>{{dietary.name}}
             <input name="dietary[dietary.name]"
-            ng-model="$ctrl.form.selectedDietary[dietary.name]"
+            ng-model="$ctrl.form.selectedDietary[dietary.sortOrder]"
             type="number"
             min="0" />
           </label>

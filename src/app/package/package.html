@@ -1,21 +1,19 @@
-<div class="package">
-    <div class="package package__container"
-        ng-show="$ctrl.isAvailable">
-
-    <span>{{ $ctrl.dietary }}</span>
-    <img class="package package__image"
-        ng-src="{{ $ctrl.pic }}"
-        alt="package picture" />
+<div class="package package__container"
+    ng-show="$ctrl.isAvailable">
 
 
     <div class="package package__main">
       <h3 class="package package__title">
         {{ $ctrl.package.name }}
         <p class="package package__title--price">
-          {{ $ctrl.package.pricePerPerson }}
+          {{ $ctrl.package.pricePerPerson }}£
           <span>per person</span>
         </p>
       </h3>
+
+      <img class="package package__image"
+      ng-src="{{ $ctrl.pic }}"
+      alt="package picture" />
 
       <div class="package package__description">
         {{ $ctrl.package.description }}
@@ -26,13 +24,32 @@
       <div ng-repeat="package in $ctrl.products">
         <h4>{{ package.item.name }}</h4>
         <h5>{{ package.item.description }}</h5>
-        <span>{{ package.count }}</span>
 
-        <div ng-repeat="option in package.item.options">
-          <label>{{ option.name }}
+        <div ng-repeat="option in package.item.options"
+            class="package package__packages__row">
+          <label>
+            <input type="number"
+              min="0"
+              ng-value="(option.count || 0) | number" />
+            {{ option.name }}
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="package package__upgrades">
+      <h3>Available upgrades</h3>
+      <div ng-repeat="upgrade in $ctrl.upgrades">
+        <h4>{{ upgrade.item.name }}</h4>
+        <h5>{{ upgrade.item.description }}</h5>
+        <span>{{ upgrade.count }}</span>
+
+        <div ng-repeat="option in upgrade.item.options">
+          <label>
             <input type="number"
               min="0"
               value="0" />
+            {{ option.name }}
           </label>
         </div>
       </div>

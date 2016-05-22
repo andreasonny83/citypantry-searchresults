@@ -40,7 +40,6 @@ function SearchresultsController($scope, $http) {
             response.data.package ?
             response.data.package :
             null;
-        console.log(vm);
       });
   }
 
