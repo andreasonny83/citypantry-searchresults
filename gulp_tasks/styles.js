@@ -10,7 +10,6 @@ const conf = require('../conf/gulp.conf');
 gulp.task('styles', styles);
 
 function styles() {
-  console.log(conf.path.src());
   return gulp.src(conf.path.src('app/sass/**/*.scss'))
     .pipe(sourcemaps.init())
     .pipe(sass({outputStyle: 'expanded'})).on('error', conf.errorHandler('Sass'))
